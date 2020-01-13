@@ -2,6 +2,12 @@ import { PAYER_SK, OWNER_SK, DEVELOP_DOMAIN } from './developmode'
 import winston from 'winston'
 import fs from 'fs'
 
+import { config as bskConfig } from 'blockstack'
+import {
+   BlockstackNetwork,
+   BitcoindAPI
+} from 'blockstack/lib/network'
+
 const configDevelopDefaults = {
   winstonConsoleTransport: {
       level: 'info',
@@ -64,6 +70,9 @@ const configDefaults = {
   minBatchSize: 1
 }
 
+const BSK_TESTNET_API_URL = 'http://testnet.blockstack.org:16268'
+const BSK_TESTNET_BROADCAST_URL = 'http://testnet.blockstack.org:16269'
+const BSK_TESTNET_UTXO_URL = 'http://testnet.blockstack.org:18332'
 
 export function getConfig() {
   let config = Object.assign({}, configDefaults)
@@ -93,5 +102,17 @@ export function getConfig() {
     new winston.transports.Console(config.winstonConsoleTransport)
   ] }
 
+  // activate testnet if requested
+  if (process.env.BSK_TESTNET) {
+    const network = new BlockstackNetwork(
+      BSK_TESTNET_API_URL, BSK_TESTNET_BROADCAST_URL,
+      new BitcoindAPI(BSK_TESTNET_UTXO_URL,
+        { username: 'blockstack', password: 'blockstacksystem' }))
+
+    bskConfig.network = network
+    bskConfig.network.layer1.scriptHash = 196
+    bskConfig.network.layer1.pubKeyHash = 111
+  }
+  
   return config
 }

@@ -150,7 +150,8 @@ export function makeHTTPServer(config) {
         res.write(JSON.stringify(status))
         res.end()
       })
-      .catch(() => {
+      .catch((e) => {
+        logger.error(e)
         res.writeHead(501, HEADERS)
         res.write(JSON.stringify(
           { status: false,

@@ -36,7 +36,7 @@ export async function isRegistrationValid(
     return false
   }
   // owner should be a bitcoin address
-  const btcRegex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/
+  const btcRegex = /^[132mn][a-km-zA-HJ-NP-Z1-9]{25,34}$/
   if (!btcRegex.test(owner)) {
     logger.debug(`owner: ${owner} failed validation`)
     return false
