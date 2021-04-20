@@ -10,8 +10,8 @@ export async function isSubdomainRegistered(fullyQualifiedAddress: String) {
     const nameInfoUrl = bskConfig.network.coreApiUrl + '/v1/names/' + fullyQualifiedAddress
     const nameInfoRequest = await fetch(nameInfoUrl)
     const { status } = nameInfoRequest
-    const nameInfo = await nameInfoRequest.json()
     if (status == 200) {
+      const nameInfo = await nameInfoRequest.json()
       return (nameInfo.status === 'registered_subdomain')
     } else {
       return false

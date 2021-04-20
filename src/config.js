@@ -1,4 +1,5 @@
 import { PAYER_SK, OWNER_SK, DEVELOP_DOMAIN, ADMIN_PASSWORD } from './developmode'
+import { config as bskConfig } from 'blockstack'
 import winston from 'winston'
 import fs from 'fs'
 
@@ -93,6 +94,10 @@ export function getConfig() {
   }
   if (process.env.BSK_SUBDOMAIN_PROMETHEUS_PORT) {
     config.prometheus = { start: true, port: parseInt(process.env.BSK_SUBDOMAIN_PROMETHEUS_PORT) }
+  }
+  if (process.env.BLOCKSTACK_API_URL) {
+    bskConfig.network.blockstackAPIUrl = process.env.BLOCKSTACK_API_URL
+    bskConfig.network.coreApiUrl = process.env.BLOCKSTACK_API_URL
   }
 
   config.winstonConfig = {

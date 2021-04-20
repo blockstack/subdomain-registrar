@@ -28,10 +28,6 @@ export function configureRegtest() {
     const port = process.env.BLOCKSTACK_TEST_CLIENT_RPC_PORT
     bskConfig.network.blockstackAPIUrl = `http://localhost:${port}`
   }
-  if (process.env.BLOCKSTACK_API_URL) {
-    bskConfig.network.blockstackAPIUrl = process.env.BLOCKSTACK_API_URL
-    bskConfig.network.coreApiUrl = process.env.BLOCKSTACK_API_URL
-  }
 }
 
 export function initializeBlockstackCore(forceRestart: ?Boolean = false,
